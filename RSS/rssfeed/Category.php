@@ -91,22 +91,22 @@ class Category
 	function showSubcategory()
 	{
 		$myReturn = '';
-        
+        $i=1;
         if($this->TotalFeed > 0)
 		{#be certain there are subCategorys
 			foreach($this->aSubcategory as $Subcategory)
 			{#print data for each 
+               
                 $myReturn .='
                 
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">' . $Subcategory->subcategoryName . '</h2>
                         <p>' . $Subcategory->subcategoryDescription . '</p><br/>
-                        <p><a href="' . $Subcategory->subcategoryRSS . '">' . $Subcategory->subcategoryRSS . '</a></p>
-                    
-                    </div>
+
+                        </div>
                     <div class="panel-body">
-                        <em> <br />
+                        <em><p> <a href="' . VIRTUAL_PATH . 'RSS/subcategory_view.php?id=' . $i . '">' . $Subcategory->subcategoryRSS . '</a></p></em><br/>
                     </div>
                 </div>
 
@@ -116,9 +116,7 @@ class Category
                 
                 
                 ';
-                
-               
-                
+                $i++;
                 
                 /*
                 ' . xxx . '
@@ -139,4 +137,33 @@ class Category
         
 	}# end showSubcategory() method
 }# end Category class
+
+function getXml($xmlURL)
+{
+$file = $xmlURL;
+    
+
+$xml = simplexml_load_file($file);
+/*
+echo '<pre>';
+var_dump($xml);
+echo '</pre>';
+*/
+
+
+/*
+echo '<pre>';
+var_dump($zep);
+echo '</pre>';
+*/
+
+foreach($xml as $album)
+{
+    
+    echo '<p>' . $album->title . '</p>';
+    echo '<p>' . $album->description . '</p>';
+    
+}
+
+}//end of getXml
 ?>
